@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Revision1</string>
+    <string name="label_enter_name">Enter Name</string>
+    <string name="label_btn_submit">Submit</string>
+</resources>
