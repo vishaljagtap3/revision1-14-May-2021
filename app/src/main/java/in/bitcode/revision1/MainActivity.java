@@ -39,9 +39,21 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //code to start an activity
                 Intent intent = new Intent(MainActivity.this, NextActivity.class);
-                startActivity(intent);
+                intent.putExtra("name", edtName.getText().toString());
+                intent.putExtra("imageid", R.drawable.in_flag);
+                //startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data != null) {
+            String tagline = data.getStringExtra("tagline");
+            txtName.setText(tagline);
+        }
     }
 
     private class BtnSubmitClickListener implements View.OnClickListener {

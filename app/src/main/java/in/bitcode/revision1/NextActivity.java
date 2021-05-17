@@ -1,10 +1,13 @@
 package in.bitcode.revision1;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,12 +18,43 @@ public class NextActivity extends Activity {
     private TextView mTxtName;
     private EditText mEdtTagLine;
     private Button mBtnSubmit;
+    private ImageView mImgCountry;
     private LinearLayout mMainContainer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        init();
+
+        //get the input
+        Intent intent = getIntent();
+        /*
+        Bundle bundle = intent.getExtras();
+        String name = bundle.getString("name", "NA");
+        int imageId = bundle.getInt("imageid");
+        */
+
+        String name = intent.getStringExtra("name");
+        int imageId = intent.getIntExtra("imageid", R.drawable.in_flag);
+        mTxtName.setText(name);
+        mImgCountry.setImageResource(imageId);
+
+        mBtnSubmit.setOnClickListener(new BtnSubmitClickListener());
+
+    }
+
+    class BtnSubmitClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent();
+            intent.putExtra("tagline", mEdtTagLine.getText().toString());
+            setResult(1, intent);
+            finish();
+        }
+    }
+
+    private void init(){
         ViewGroup.LayoutParams layoutParams =
                 new ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -46,8 +80,11 @@ public class NextActivity extends Activity {
         mBtnSubmit.setLayoutParams(layoutParams);
         mMainContainer.addView(mBtnSubmit);
 
-        setContentView(mMainContainer);
+        mImgCountry = new ImageView(this);
+        mImgCountry.setLayoutParams(new ViewGroup.LayoutParams(300, 300) );
+        mMainContainer.addView(mImgCountry);
 
+        setContentView(mMainContainer);
     }
 
 }
